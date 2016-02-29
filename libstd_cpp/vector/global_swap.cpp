@@ -1,0 +1,32 @@
+// swap (vector overload)
+#include <iostream>
+#include "vector.h"
+
+int main ()
+{
+  Hx::vector<int> foo (3,100);   // three ints with a value of 100
+  Hx::vector<int> bar (5,200);   // five ints with a value of 200
+
+  swap(foo, bar);
+
+  std::cout << "foo contains:";
+  for (Hx::vector<int>::iterator it = foo.begin(); it!=foo.end(); ++it)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
+
+  std::cout << "bar contains:";
+  for (Hx::vector<int>::iterator it = bar.begin(); it!=bar.end(); ++it)
+    std::cout << ' ' << *it;
+  std::cout << '\n';
+
+  return 0;
+}
+
+
+/*
+Output:
+
+foo contains: 200 200 200 200 200 
+bar contains: 100 100 100 
+*/
+

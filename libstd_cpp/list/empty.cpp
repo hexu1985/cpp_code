@@ -1,0 +1,30 @@
+// list::empty
+#include <iostream>
+#include "list.h"
+
+int main ()
+{
+  Hx::list<int> mylist;
+  int sum (0);
+
+  for (int i=1;i<=10;++i) mylist.push_back(i);
+
+  while (!mylist.empty())
+  {
+     sum += mylist.front();
+     mylist.pop_front();
+  }
+
+  std::cout << "total: " << sum << '\n';
+  
+  return 0;
+} 
+
+/*
+The example initializes the content of the container to a sequence of numbers (form 1 to 10). It then pops the elements one by one until it is empty and calculates their sum.
+
+Output:
+
+total: 55
+*/ 
+

@@ -1,0 +1,7 @@
+g++ -o constructors constructors.cpp -Wall -g -std=c++11  -I../memory -I../algorithm -I../type_traits -I../key_words
+In file included from vector.h:2:0,
+                 from constructors.cpp:3:
+impl/opt_vector.h:727:27: 错误：expected ‘)’ before ‘position’
+  iterator (const_iterator position, 
+                           ^
+make: *** [constructors] 错误 1

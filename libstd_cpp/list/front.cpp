@@ -1,0 +1,25 @@
+// list::front
+#include <iostream>
+#include "list.h"
+
+int main ()
+{
+  Hx::list<int> mylist;
+
+  mylist.push_back(77);
+  mylist.push_back(22);
+
+  // now front equals 77, and back 22
+
+  mylist.front() -= mylist.back();
+
+  std::cout << "mylist.front() is now " << mylist.front() << '\n';
+
+  return 0;
+}
+
+/*
+Output:
+mylist.front() is now 55
+*/
+
