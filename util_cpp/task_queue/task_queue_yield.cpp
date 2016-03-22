@@ -1,6 +1,6 @@
 #include <utility>
 #include <functional>
-#include <queue>
+#include <deque>
 #include <mutex>
 #include <thread>
 #include <memory>
@@ -33,19 +33,21 @@ Task_base *make_task(Args &&...args)
 	return make_task_helper(std::bind(std::forward<Args>(args)...));
 }
 
-class Task_queue: public std::queue<Task_base *> {
+class Task_queue: public std::deque<Task_base *> {
 	std::mutex queue_mtx_;
 
 public:
 	void push_task(Task_base *task) {
 		std::lock_guard<std::mutex> lck(queue_mtx_);
-		this->push(task);
+		this->push_back(task);
 	}	
 
-	void swap_task(std::queue<Task_base *> &task_queue) {
+	void swap_task(std::deque<Task_base *> &task_queue) {
 		std::lock_guard<std::mutex> lck(queue_mtx_);
 		if (!this->empty()) {
 			this->swap(task_queue);
+		} else {
+			std::this_thread::yield();
 		}
 	}
 	
@@ -53,11 +55,11 @@ public:
 
 void processor(Task_queue &incoming_queue)
 {
-	std::queue<Task_base *> work_queue;
+	std::deque<Task_base *> work_queue;
 	while (true) {
 		while (!work_queue.empty()) {
 			Task_base *task = work_queue.front();
-			work_queue.pop();
+			work_queue.pop_front();
 			task->run();
 			delete task;
 		}

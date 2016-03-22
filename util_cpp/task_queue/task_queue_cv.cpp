@@ -2,6 +2,7 @@
 #include <functional>
 #include <queue>
 #include <mutex>
+#include <condition_variable>
 #include <thread>
 #include <memory>
 #include <iostream>
@@ -35,20 +36,22 @@ Task_base *make_task(Args &&...args)
 
 class Task_queue: public std::queue<Task_base *> {
 	std::mutex queue_mtx_;
+	std::condition_variable queue_cv_;
 
 public:
 	void push_task(Task_base *task) {
 		std::lock_guard<std::mutex> lck(queue_mtx_);
 		this->push(task);
+		queue_cv_.notify_one();
 	}	
 
 	void swap_task(std::queue<Task_base *> &task_queue) {
-		std::lock_guard<std::mutex> lck(queue_mtx_);
-		if (!this->empty()) {
-			this->swap(task_queue);
+		std::unique_lock<std::mutex> lck(queue_mtx_);
+		while (this->empty()) {
+			queue_cv_.wait(lck);
 		}
+		this->swap(task_queue);
 	}
-	
 };
 
 void processor(Task_queue &incoming_queue)
