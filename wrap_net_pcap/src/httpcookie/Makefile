@@ -1,0 +1,23 @@
+
+RM = rm -f
+CXX = g++
+CXXFLAGS = -Wall -g #-DNDEBUG
+INCLUDES = -I../../include
+LDFLAGS = -lpcap -lboost_thread -lboost_system
+LDPATH =
+VPATH = ../../lib
+
+SOURCES = $(shell ls *.cpp)
+PROGS = httpcookie
+LIB_SOURCES = dlist_base.cpp net_sniffer.cpp wrappcap.cpp net_parser.cpp \
+			  net_protocol_info.cpp net_util.cpp net_packet.cpp \
+			  http_parser.cpp str_util.cpp
+
+all: $(PROGS)
+	@echo "PROGS = $(PROGS)" 
+
+clean:
+	$(RM) $(PROGS)
+
+$(PROGS): $(SOURCES) $(LIB_SOURCES)
+	$(CXX) -o $@ $(CXXFLAGS) $(INCLUDES) $^ $(LDFLAGS) $(LDPATH)
