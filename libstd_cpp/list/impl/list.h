@@ -771,7 +771,7 @@ public:
 
 	iterator insert(const_iterator position, size_type n, const value_type &val)
 	{
-		link_type *keep;
+		link_type *keep = const_cast<link_type *>(position.link);
 		for (size_type i = 0; i < n; ++i) {
 			link_type *link = create_node(val);
 			if (i == 0) {
@@ -794,7 +794,7 @@ public:
 		std::enable_if<!std::is_integral<InputIterator>::value>::type * = NULL)
 #endif // __cplusplus >= 201103L
 	{
-		link_type *keep;
+		link_type *keep = const_cast<link_type *>(position.link);
 		for (InputIterator iter = first; iter != last; ++iter) {
 			link_type *link = create_node(*iter);
 			if (iter == first) {
