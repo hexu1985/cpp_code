@@ -16,10 +16,10 @@ std::vector<std::string> split(const string& s, char c)
 		v.push_back(s.substr(i, j-i));
 		i = ++j;
 		j = s.find(c, j);
-
-		if (j == string::npos)
-			v.push_back(s.substr(i, s.length( )));
 	}
+
+    if (j == string::npos)
+        v.push_back(s.substr(i, s.length( )));
 
     return v;
 }
