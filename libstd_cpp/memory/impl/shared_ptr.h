@@ -97,7 +97,7 @@ public:
 	 * (and uses it if at some point needs to delete p).
 	 */
 	template <typename U, typename D>
-	explicit shared_ptr(U *p, D del): ptr_(p), ref_count_(p, del)
+	shared_ptr(U *p, D del): ptr_(p), ref_count_(p, del)
 	{
 		Hx::detail::sp_deleter_construct(this, p);
 	}
@@ -421,8 +421,8 @@ bool operator ==(const shared_ptr<T> &lhs, std::nullptr_t) noexcept
 	return lhs.get() == nullptr;
 }
 
-template <typename T, typename U>
-bool operator ==(std::nullptr_t, const shared_ptr<U> &rhs) noexcept
+template <typename T>
+bool operator ==(std::nullptr_t, const shared_ptr<T> &rhs) noexcept
 {
 	return nullptr == rhs.get();
 }
@@ -441,8 +441,8 @@ bool operator !=(const shared_ptr<T> &lhs, std::nullptr_t) noexcept
 	return !(lhs == nullptr);
 }
 
-template <typename T, typename U>
-bool operator !=(std::nullptr_t, const shared_ptr<U> &rhs) noexcept
+template <typename T>
+bool operator !=(std::nullptr_t, const shared_ptr<T> &rhs) noexcept
 {
 	return !(nullptr == rhs);
 }
@@ -461,8 +461,8 @@ bool operator <(const shared_ptr<T> &lhs, std::nullptr_t) noexcept
 	return lhs.get() < nullptr;
 }
 
-template <typename T, typename U>
-bool operator <(std::nullptr_t, const shared_ptr<U> &rhs) noexcept
+template <typename T>
+bool operator <(std::nullptr_t, const shared_ptr<T> &rhs) noexcept
 {
 	return nullptr < rhs.get();
 }
@@ -481,8 +481,8 @@ bool operator <=(const shared_ptr<T> &lhs, std::nullptr_t) noexcept
 	return !(lhs.get() > nullptr);
 }
 
-template <typename T, typename U>
-bool operator <=(std::nullptr_t, const shared_ptr<U> &rhs) noexcept
+template <typename T>
+bool operator <=(std::nullptr_t, const shared_ptr<T> &rhs) noexcept
 {
 	return !(nullptr > rhs.get());
 }
@@ -501,8 +501,8 @@ bool operator >(const shared_ptr<T> &lhs, std::nullptr_t) noexcept
 	return (nullptr < lhs);
 }
 
-template <typename T, typename U>
-bool operator >(std::nullptr_t, const shared_ptr<U> &rhs) noexcept
+template <typename T>
+bool operator >(std::nullptr_t, const shared_ptr<T> &rhs) noexcept
 {
 	return (rhs < nullptr);
 }
@@ -521,8 +521,8 @@ bool operator >=(const shared_ptr<T> &lhs, std::nullptr_t) noexcept
 	return !(lhs < nullptr);
 }
 
-template <typename T, typename U>
-bool operator >=(std::nullptr_t, const shared_ptr<U> &rhs) noexcept
+template <typename T>
+bool operator >=(std::nullptr_t, const shared_ptr<T> &rhs) noexcept
 {
 	return !(nullptr < rhs);
 }

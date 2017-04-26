@@ -369,6 +369,7 @@ void rbtree_remove_fixup(bintree_t *tree, bintree_node_t *viol)
 				rbtree_set_black(keep);
 				rbtree_set_red(viol->parent);
 				bintree_right_rotate(tree, viol->parent);
+				keep = viol->parent->left;
 			}
 			if (rbtree_is_black(keep->left) && rbtree_is_black(keep->right)) {	// Case 2'
 				rbtree_set_red(keep);
